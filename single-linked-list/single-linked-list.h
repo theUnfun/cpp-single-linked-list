@@ -51,9 +51,6 @@ class SingleLinkedList {
 		}
 
 		BasicIterator& operator++() noexcept {
-			if (node_ != nullptr) {
-				node_ = node_->next_node;
-			}
 			return *this;
 		}
 
