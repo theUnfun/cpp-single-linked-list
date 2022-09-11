@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cassert>
+
 template <typename Type>
 class SingleLinkedList {
 	struct Node {
@@ -51,6 +53,8 @@ class SingleLinkedList {
 		}
 
 		BasicIterator& operator++() noexcept {
+			assert(node_ != nullptr);
+			node_ = node_->next_node;
 			return *this;
 		}
 
@@ -61,10 +65,12 @@ class SingleLinkedList {
 		}
 
 		[[nodiscard]] reference operator*() const noexcept {
+			assert(node_ != nullptr);
 			return node_->value;
 		}
 
 		[[nodiscard]] pointer operator->() const noexcept {
+			assert(node_ != nullptr);
 			return &(node_->value);
 		}
 
@@ -170,6 +176,7 @@ public:
 	}
 
 	Iterator InsertAfter(ConstIterator pos, const Type& value) {
+		assert(pos.node_ != nullptr);
 		auto& prev_node = pos.node_;
 		prev_node->next_node = new Node(value, prev_node->next_node);
 		++size_;
@@ -187,6 +194,7 @@ public:
 	}
 
 	Iterator EraseAfter(ConstIterator pos) noexcept {
+		assert(pos.node_ != nullptr);
 		if (IsEmpty()) {
 			return Iterator(nullptr);
 		}
